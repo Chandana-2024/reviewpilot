@@ -1,0 +1,23 @@
+{
+  "name": "ai-code-review-bot",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+ "scripts": {
+  "dev": "npm run build --workspace @review-bot/review-engine && concurrently -k -n API,WEB -c blue,green \"npm:dev:api\" \"npm:dev:web\"",
+  "dev:api": "npm --workspace @review-bot/api run dev",
+  "dev:web": "npm --workspace @review-bot/web run dev",
+  "build": "npm run build --workspace @review-bot/review-engine && npm run build --workspace @review-bot/api && npm run build --workspace @review-bot/web",
+  "test": "npm run test --workspace @review-bot/review-engine && npm run build --workspace @review-bot/review-engine && npm run test --workspace @review-bot/api",
+  "typecheck": "npm run typecheck --workspace @review-bot/review-engine && npm run build --workspace @review-bot/review-engine && npm run typecheck --workspace @review-bot/api && npm run typecheck --workspace @review-bot/web"
+},
+  "devDependencies": {
+    "concurrently": "^9.1.2",
+    "typescript": "^5.7.3",
+    "vitest": "^5.0.5"
+  }
+}
